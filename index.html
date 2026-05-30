@@ -5,6 +5,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wedding Reception — Suhail & Farzana</title>
+
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:title" content="Wedding Reception — Suhail & Farzana" />
+    <meta property="og:description"
+        content="Join us in celebrating the wedding reception of Mohammed Suhail & Fathima Farzana on Monday, 20th July 2026." />
+    <meta property="og:image" content="./preview.png" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Wedding Reception — Suhail & Farzana" />
+    <meta name="twitter:description"
+        content="Join us in celebrating the wedding reception of Mohammed Suhail & Fathima Farzana on Monday, 20th July 2026." />
+    <meta name="twitter:image" content="./preview.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cinzel:wght@400;500;600&family=Playfair+Display+SC:wght@400;700&display=swap"
         rel="stylesheet" />
@@ -135,7 +152,7 @@
         /* ── WRAPPER ── */
         .invite {
             position: relative;
-            z-index: 1;
+            z-index: 10;
             max-width: 700px;
             margin: 0 auto;
             padding: 56px 32px 80px;
@@ -438,11 +455,6 @@
             margin: 10px 0 4px;
         }
 
-        .late {
-            color: rgba(240, 220, 170, 0.35);
-            font-style: italic;
-        }
-
         /* ── EVENT DETAILS ── */
         .event-details {
             text-align: center;
@@ -535,7 +547,7 @@
             border-color: var(--gold-light);
         }
 
-        /* ── DRESS CODE ── */
+        /* ── DRESS CODE ──
         .dress-code {
             text-align: center;
             margin: 24px auto;
@@ -568,7 +580,7 @@
             bottom: -1px;
             right: -1px;
             border-width: 0 1px 1px 0;
-        }
+        } */
 
         .dress-label {
             font-family: 'Cinzel', serif;
@@ -598,14 +610,68 @@
         }
 
         /* ── RSVP ── */
-        .rsvp-section {
+        .venue-section {
             text-align: center;
             margin: 32px 0 18px;
             opacity: 0;
             animation: fadeUp 1s ease forwards 4.0s;
+            position: relative;
+            z-index: 50;
         }
 
-        .rsvp-label {
+        .button-group {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .calendar-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 8px;
+            background-color: #1a0b12;
+            min-width: 180px;
+            border: 1px solid rgba(201, 168, 76, 0.3);
+            z-index: 100;
+            text-align: center;
+        }
+
+        .dropdown-content.show {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: var(--gold-pale);
+            padding: 14px 16px;
+            text-decoration: none;
+            display: block;
+            font-family: 'Cinzel', serif;
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: background 0.3s, color 0.3s;
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+        }
+
+        .dropdown-content a:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-content a:hover {
+            background-color: rgba(201, 168, 76, 0.1);
+            color: var(--gold-light);
+        }
+
+        .venue-section .venue-label {
             font-family: 'Cinzel', serif;
             font-size: 9px;
             letter-spacing: 5px;
@@ -615,7 +681,7 @@
             display: block;
         }
 
-        .rsvp-btn {
+        .venue-btn {
             display: inline-block;
             padding: 13px 38px;
             border: 1px solid var(--gold);
@@ -631,7 +697,7 @@
             cursor: pointer;
         }
 
-        .rsvp-btn::before {
+        .venue-btn::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -641,25 +707,17 @@
             z-index: 0;
         }
 
-        .rsvp-btn:hover::before {
+        .venue-btn:hover::before {
             transform: translateX(0);
         }
 
-        .rsvp-btn:hover {
+        .venue-btn:hover {
             color: var(--black);
         }
 
-        .rsvp-btn span {
+        .venue-btn span {
             position: relative;
             z-index: 1;
-        }
-
-        .rsvp-note {
-            font-family: 'Playfair Display', serif;
-            font-size: 12px;
-            color: rgba(240, 220, 170, 0.35);
-            margin-top: 12px;
-            font-style: italic;
         }
 
         /* ── FOOTER ── */
@@ -773,15 +831,146 @@
             .candle-altar {
                 height: 110px;
             }
+
+            .button-group {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0 20px;
+                gap: 12px;
+            }
+
+            .venue-btn {
+                padding: 13px 20px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .calendar-dropdown {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <div id="curtain">
-        <div class="curtain-half left"></div>
-        <div class="curtain-half right"></div>
+    <canvas id="petals"></canvas>
+
+    <!-- Rose corner clusters -->
+    <div class="rose-corner bl">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- stems -->
+            <path d="M10 220 Q30 180 55 150 Q75 125 90 100" stroke="#7a2038" stroke-width="1.4" fill="none"
+                opacity="0.8" />
+            <path d="M10 220 Q45 185 70 160 Q95 135 115 105" stroke="#7a2038" stroke-width="1.2" fill="none"
+                opacity="0.7" />
+            <path d="M10 220 Q20 190 35 168 Q50 148 60 125" stroke="#7a2038" stroke-width="1" fill="none"
+                opacity="0.6" />
+            <path d="M10 220 Q55 195 85 178 Q110 163 130 148" stroke="#7a2038" stroke-width="1" fill="none"
+                opacity="0.6" />
+            <!-- leaves -->
+            <path d="M45 172 Q32 155 38 140 Q52 152 45 172Z" fill="#4a1020" opacity="0.7" />
+            <path d="M68 152 Q55 136 60 120 Q74 132 68 152Z" fill="#4a1020" opacity="0.65" />
+            <path d="M88 130 Q78 112 85 98  Q98 110 88 130Z" fill="#4a1020" opacity="0.6" />
+            <path d="M72 175 Q85 158 98 160 Q88 174 72 175Z" fill="#4a1020" opacity="0.55" />
+            <path d="M105 152 Q118 136 130 140 Q120 153 105 152Z" fill="#4a1020" opacity="0.5" />
+            <!-- large open rose 1 -->
+            <g transform="translate(88,96)">
+                <circle r="16" fill="#3d0c1a" stroke="#8b2040" stroke-width="1.2" />
+                <circle r="10" fill="#4a1020" stroke="#a0304e" stroke-width="1" />
+                <circle r="5" fill="#5c1828" stroke="#b84060" stroke-width="0.8" />
+                <path d="M-16 0 Q-10-14 0-16 Q10-14 16 0" stroke="#c9607a" stroke-width="0.7" fill="none"
+                    opacity="0.6" />
+                <path d="M-14 8 Q-8-10 0-12 Q8-10 14 8" stroke="#c9607a" stroke-width="0.6" fill="none" opacity="0.5" />
+                <path d="M-10 14 Q-4 2 0 0 Q4 2 10 14" stroke="#c9607a" stroke-width="0.6" fill="none" opacity="0.45" />
+            </g>
+            <!-- rose 2 -->
+            <g transform="translate(115,105)">
+                <circle r="13" fill="#3d0c1a" stroke="#8b2040" stroke-width="1.1" />
+                <circle r="8" fill="#4a1020" stroke="#a0304e" stroke-width="0.9" />
+                <circle r="4" fill="#5c1828" stroke="#b84060" stroke-width="0.7" />
+                <path d="M-13 0 Q-8-11 0-13 Q8-11 13 0" stroke="#c9607a" stroke-width="0.6" fill="none"
+                    opacity="0.55" />
+                <path d="M-11 6 Q-5-8 0-10 Q5-8 11 6" stroke="#c9607a" stroke-width="0.5" fill="none" opacity="0.45" />
+            </g>
+            <!-- rose 3 — bud -->
+            <g transform="translate(60,124)">
+                <ellipse rx="8" ry="11" fill="#3d0c1a" stroke="#8b2040" stroke-width="1" />
+                <ellipse rx="4" ry="6" fill="#4a1020" stroke="#a0304e" stroke-width="0.8" />
+                <path d="M-8 0 Q0-10 8 0" stroke="#c9607a" stroke-width="0.6" fill="none" opacity="0.5" />
+            </g>
+            <!-- small accent buds -->
+            <g transform="translate(130,148)">
+                <ellipse rx="6" ry="8" fill="#3d0c1a" stroke="#7a2038" stroke-width="0.9" />
+                <path d="M-6 0 Q0-8 6 0" stroke="#b05070" stroke-width="0.5" fill="none" opacity="0.5" />
+            </g>
+            <g transform="translate(35,167)">
+                <ellipse rx="5" ry="7" fill="#3d0c1a" stroke="#7a2038" stroke-width="0.8" />
+            </g>
+            <!-- gold leaf accents -->
+            <path d="M50 160 Q40 145 46 132 Q58 144 50 160Z" fill="none" stroke="#c9a84c" stroke-width="0.6"
+                opacity="0.35" />
+            <path d="M95 125 Q87 110 92 98  Q104 110 95 125Z" fill="none" stroke="#c9a84c" stroke-width="0.6"
+                opacity="0.3" />
+            <path d="M118 148 Q128 134 138 138 Q128 150 118 148Z" fill="none" stroke="#c9a84c" stroke-width="0.5"
+                opacity="0.28" />
+        </svg>
+    </div>
+
+    <div class="rose-corner br">
+        <svg width="220" height="220" viewBox="0 0 220 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 220 Q30 180 55 150 Q75 125 90 100" stroke="#7a2038" stroke-width="1.4" fill="none"
+                opacity="0.8" />
+            <path d="M10 220 Q45 185 70 160 Q95 135 115 105" stroke="#7a2038" stroke-width="1.2" fill="none"
+                opacity="0.7" />
+            <path d="M10 220 Q20 190 35 168 Q50 148 60 125" stroke="#7a2038" stroke-width="1" fill="none"
+                opacity="0.6" />
+            <path d="M10 220 Q55 195 85 178 Q110 163 130 148" stroke="#7a2038" stroke-width="1" fill="none"
+                opacity="0.6" />
+            <path d="M45 172 Q32 155 38 140 Q52 152 45 172Z" fill="#4a1020" opacity="0.7" />
+            <path d="M68 152 Q55 136 60 120 Q74 132 68 152Z" fill="#4a1020" opacity="0.65" />
+            <path d="M88 130 Q78 112 85 98  Q98 110 88 130Z" fill="#4a1020" opacity="0.6" />
+            <path d="M72 175 Q85 158 98 160 Q88 174 72 175Z" fill="#4a1020" opacity="0.55" />
+            <path d="M105 152 Q118 136 130 140 Q120 153 105 152Z" fill="#4a1020" opacity="0.5" />
+            <g transform="translate(88,96)">
+                <circle r="16" fill="#3d0c1a" stroke="#8b2040" stroke-width="1.2" />
+                <circle r="10" fill="#4a1020" stroke="#a0304e" stroke-width="1" />
+                <circle r="5" fill="#5c1828" stroke="#b84060" stroke-width="0.8" />
+                <path d="M-16 0 Q-10-14 0-16 Q10-14 16 0" stroke="#c9607a" stroke-width="0.7" fill="none"
+                    opacity="0.6" />
+                <path d="M-14 8 Q-8-10 0-12 Q8-10 14 8" stroke="#c9607a" stroke-width="0.6" fill="none" opacity="0.5" />
+                <path d="M-10 14 Q-4 2 0 0 Q4 2 10 14" stroke="#c9607a" stroke-width="0.6" fill="none" opacity="0.45" />
+            </g>
+            <g transform="translate(115,105)">
+                <circle r="13" fill="#3d0c1a" stroke="#8b2040" stroke-width="1.1" />
+                <circle r="8" fill="#4a1020" stroke="#a0304e" stroke-width="0.9" />
+                <circle r="4" fill="#5c1828" stroke="#b84060" stroke-width="0.7" />
+                <path d="M-13 0 Q-8-11 0-13 Q8-11 13 0" stroke="#c9607a" stroke-width="0.6" fill="none"
+                    opacity="0.55" />
+                <path d="M-11 6 Q-5-8 0-10 Q5-8 11 6" stroke="#c9607a" stroke-width="0.5" fill="none" opacity="0.45" />
+            </g>
+            <g transform="translate(60,124)">
+                <ellipse rx="8" ry="11" fill="#3d0c1a" stroke="#8b2040" stroke-width="1" />
+                <ellipse rx="4" ry="6" fill="#4a1020" stroke="#a0304e" stroke-width="0.8" />
+                <path d="M-8 0 Q0-10 8 0" stroke="#c9607a" stroke-width="0.6" fill="none" opacity="0.5" />
+            </g>
+            <g transform="translate(130,148)">
+                <ellipse rx="6" ry="8" fill="#3d0c1a" stroke="#7a2038" stroke-width="0.9" />
+                <path d="M-6 0 Q0-8 6 0" stroke="#b05070" stroke-width="0.5" fill="none" opacity="0.5" />
+            </g>
+            <g transform="translate(35,167)">
+                <ellipse rx="5" ry="7" fill="#3d0c1a" stroke="#7a2038" stroke-width="0.8" />
+            </g>
+            <path d="M50 160 Q40 145 46 132 Q58 144 50 160Z" fill="none" stroke="#c9a84c" stroke-width="0.6"
+                opacity="0.35" />
+            <path d="M95 125 Q87 110 92 98  Q104 110 95 125Z" fill="none" stroke="#c9a84c" stroke-width="0.6"
+                opacity="0.3" />
+            <path d="M118 148 Q128 134 138 138 Q128 150 118 148Z" fill="none" stroke="#c9a84c" stroke-width="0.5"
+                opacity="0.28" />
+        </svg>
+    </div>
+    <div class="curtain-half left"></div>
+    <div class="curtain-half right"></div>
     </div>
 
     <div class="bg-layer"></div>
@@ -843,7 +1032,7 @@
                 <span class="family-label">Paternal Grandparents</span>
                 <p class="family-member-secondary">T.H. Mohammed Jalal<br>&amp; Jameela Jalal</p>
                 <span class="family-label">Maternal Grandparents</span>
-                <p class="family-member-secondary late">Late MohammedAli<br>&amp; Noorjahan</p>
+                <p class="family-member-secondary">Late MohammedAli<br>&amp; Noorjahan</p>
             </div>
             <div class="family-divider"></div>
             <div class="family-col">
@@ -866,7 +1055,7 @@
         <!-- Event Details -->
         <div class="event-details">
             <span class="event-label">The Celebration</span>
-            <div class="event-date">Saturday, 20th June</div>
+            <div class="event-date">Monday, 20th July</div>
             <span class="event-year">2026</span>
             <div class="time-venue-grid">
                 <div class="detail-block">
@@ -876,36 +1065,107 @@
                 <div class="detail-divider"></div>
                 <div class="detail-block">
                     <span class="detail-label">Venue</span>
-                    <span class="detail-value">DMCC Convention Centre<br>Dubai</span>
+                    <span class="detail-value">DMCC Convention Centre</span>
                 </div>
             </div>
-            <a class="venue-link" href="https://share.google/0ZxJ86BrsaGef0nvp" target="_blank">↗ View on Google
-                Maps</a>
+        </div>
+
+        <!-- Actions -->
+        <div class="venue-section">
+            <div class="button-group">
+                <a class="venue-btn" href="https://maps.app.goo.gl/eNi599jPcTzMBBYb8" target="_blank"><span>Get
+                        Directions</span></a>
+                <div class="calendar-dropdown">
+                    <a class="venue-btn" href="javascript:void(0)" onclick="toggleCalendarDropdown(event)"><span>Add to
+                            Calendar</span></a>
+                    <div class="dropdown-content" id="calendarDropdown">
+                        <a href="javascript:void(0)"
+                            onclick="addToGoogleCalendar(); toggleCalendarDropdown(event);">Google Calendar</a>
+                        <a href="javascript:void(0)" onclick="addToCalendar(); toggleCalendarDropdown(event);">Apple /
+                            Outlook</a>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Dress Code -->
-        <div class="dress-code">
+        <!-- <div class="dress-code">
             <span class="dress-label">Dress Code</span>
             <p class="dress-desc">Western Formal Attire</p>
-            <p class="dress-attire">Black Tie &nbsp;·&nbsp; Cocktail &nbsp;·&nbsp; Smart Formal</p>
-        </div>
-
-        <!-- RSVP -->
-        <div class="rsvp-section">
-            <span class="rsvp-label">Kindly RSVP</span>
-            <a class="rsvp-btn" href="https://wa.me/+10000000000" target="_blank"><span>WhatsApp to RSVP</span></a>
-            <p class="rsvp-note">Please respond by 13th June, 2026</p>
-        </div>
+        </div> -->
 
         <!-- Footer -->
         <div class="invite-footer">
             <span class="footer-monogram">S &amp; F</span>
-            <span class="footer-date">20 · 06 · 2026 &nbsp;·&nbsp; Dubai</span>
+            <span class="footer-date">20 · 06 · 2026</span>
         </div>
 
     </div>
 
     <script>
+        /* ADD TO CALENDAR */
+        function toggleCalendarDropdown(event) {
+            if (event) {
+                event.stopPropagation();
+                event.preventDefault();
+            }
+            document.getElementById("calendarDropdown").classList.toggle("show");
+        }
+
+        window.onclick = function (event) {
+            if (!event.target.closest('.calendar-dropdown')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        function addToGoogleCalendar() {
+            const title = encodeURIComponent("Mohammed Suhail & Fathima Farzana's Wedding Reception");
+            const details = encodeURIComponent("Join us in celebrating the wedding reception of Mohammed Suhail & Fathima Farzana.\n\nView Location: https://maps.app.goo.gl/eNi599jPcTzMBBYb8");
+            const location = encodeURIComponent("DMCC Convention Centre");
+            const dates = "20260720T180000/20260720T235900";
+            const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&details=${details}&location=${location}&dates=${dates}`;
+            window.open(url, '_blank');
+        }
+
+        function addToCalendar() {
+            const event = {
+                title: "Mohammed Suhail & Fathima Farzana's Wedding Reception",
+                location: "DMCC Convention Centre",
+                description: "Join us in celebrating the wedding reception of Mohammed Suhail & Fathima Farzana.\\n\\nView Location: https://maps.app.goo.gl/eNi599jPcTzMBBYb8",
+                start: "20260720T180000",
+                end: "20260720T235900"
+            };
+
+            const icsContent = [
+                "BEGIN:VCALENDAR",
+                "VERSION:2.0",
+                "PRODID:-//Suhail and Fathima//Wedding Reception//EN",
+                "BEGIN:VEVENT",
+                `DTSTART:${event.start}`,
+                `DTEND:${event.end}`,
+                `SUMMARY:${event.title}`,
+                `LOCATION:${event.location}`,
+                `DESCRIPTION:${event.description}`,
+                "END:VEVENT",
+                "END:VCALENDAR"
+            ].join("\\n");
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', 'Suhail_Fathima_Reception.ics');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
         /* ── CURTAIN ── */
         window.addEventListener('load', () => setTimeout(() => document.body.classList.add('revealed'), 300));
 
@@ -1008,6 +1268,81 @@
             requestAnimationFrame(animate);
         }
         animate();
+
+        /* ── FALLING PETALS ── */
+        (function initPetals() {
+            const pc = document.getElementById('petals');
+            const px = pc.getContext('2d');
+
+            function resizePetals() { pc.width = window.innerWidth; pc.height = window.innerHeight; }
+            resizePetals();
+            window.addEventListener('resize', resizePetals);
+
+            const COLORS = [
+                [139, 32, 64],   // deep wine
+                [160, 45, 80],   // rose
+                [100, 18, 38],   // dark burgundy
+                [190, 100, 120],  // blush
+                [74, 16, 32],   // near-black rose
+                [201, 168, 76],   // gold (rare)
+            ];
+
+            class Petal {
+                constructor(immediate) { this.reset(immediate); }
+                reset(immediate) {
+                    this.x = Math.random() * pc.width;
+                    this.y = immediate ? Math.random() * pc.height : -16;
+                    this.w = Math.random() * 6 + 3.5;
+                    this.h = this.w * (1.5 + Math.random() * 0.5);
+                    this.vx = (Math.random() - 0.5) * 0.7;
+                    this.vy = Math.random() * 0.9 + 0.35;
+                    this.rot = Math.random() * Math.PI * 2;
+                    this.rotV = (Math.random() - 0.5) * 0.025;
+                    this.swayT = Math.random() * Math.PI * 2;
+                    this.swayS = Math.random() * 0.016 + 0.007;
+                    this.sway = Math.random() * 0.55 + 0.15;
+                    const c = COLORS[Math.floor(Math.random() * COLORS.length)];
+                    // gold petals much rarer
+                    const isGold = c[0] > 190;
+                    this.r = c[0]; this.g = c[1]; this.b = c[2];
+                    this.opacity = isGold
+                        ? Math.random() * 0.18 + 0.06
+                        : Math.random() * 0.45 + 0.18;
+                }
+                update() {
+                    this.swayT += this.swayS;
+                    this.x += this.vx + Math.sin(this.swayT) * this.sway;
+                    this.y += this.vy;
+                    this.rot += this.rotV;
+                    if (this.y > pc.height + 20) this.reset(false);
+                }
+                draw() {
+                    px.save();
+                    px.translate(this.x, this.y);
+                    px.rotate(this.rot);
+                    px.globalAlpha = this.opacity;
+                    px.fillStyle = `rgb(${this.r},${this.g},${this.b})`;
+                    // teardrop petal
+                    const w = this.w, h = this.h;
+                    px.beginPath();
+                    px.moveTo(0, -h / 2);
+                    px.bezierCurveTo(w * 0.75, -h * 0.18, w * 0.55, h * 0.42, 0, h / 2);
+                    px.bezierCurveTo(-w * 0.55, h * 0.42, -w * 0.75, -h * 0.18, 0, -h / 2);
+                    px.closePath();
+                    px.fill();
+                    px.restore();
+                }
+            }
+
+            const petals = Array.from({ length: 42 }, () => new Petal(true));
+
+            function animatePetals() {
+                px.clearRect(0, 0, pc.width, pc.height);
+                petals.forEach(p => { p.update(); p.draw(); });
+                requestAnimationFrame(animatePetals);
+            }
+            setTimeout(animatePetals, 2200);
+        })();
     </script>
 </body>
 
