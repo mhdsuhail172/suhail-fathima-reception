@@ -682,7 +682,9 @@
         }
 
         .venue-btn {
-            display: inline-block;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
             padding: 13px 38px;
             border: 1px solid var(--gold);
             color: var(--gold-pale);
@@ -695,6 +697,8 @@
             overflow: hidden;
             transition: color 0.4s;
             cursor: pointer;
+            box-sizing: border-box;
+            min-width: 240px;
         }
 
         .venue-btn::before {
@@ -969,8 +973,10 @@
                 opacity="0.28" />
         </svg>
     </div>
-    <div class="curtain-half left"></div>
-    <div class="curtain-half right"></div>
+
+    <div id="curtain">
+        <div class="curtain-half left"></div>
+        <div class="curtain-half right"></div>
     </div>
 
     <div class="bg-layer"></div>
